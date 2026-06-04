@@ -23,9 +23,9 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        working-directory: ./recipe-browser/recipe-finder
+        working-directory: .
         run: npm ci
 
       - name: Run tests
-        working-directory: ./recipe-browser/recipe-finder
+        working-directory: .
         run: npm test --if-present --silent
