@@ -96,6 +96,31 @@ body {
   box-shadow: 0 8px 18px rgba(124, 58, 237, 0.5);
 }
 
+/* Category selector row */
+.category-row {
+  display: flex;
+  gap: 8px;
+  margin: 12px auto 18px auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 820px; /* keep rows readable and allow wrapping */
+}
+.category-button {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.15);
+  background: rgba(255,255,255,0.02);
+  color: var(--text-main);
+  cursor: pointer;
+  flex: 0 1 140px; /* allow wrapping into next centered row when too many */
+  text-align: center;
+}
+.category-button.active {
+  background: linear-gradient(90deg, rgba(124,58,237,1), rgba(168,85,247,1));
+  color: white;
+  border: none;
+}
+
 /* Status messages */
 
 .status-message {
@@ -125,7 +150,46 @@ body {
   margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.recipe-meta .badge + .badge {
+  margin-left: 6px;
+}
   gap: 16px;
+}
+
+/* Badges for metadata */
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-main);
+  font-weight: 700;
+}
+.badge.category {
+  background: rgba(124,58,237,0.18);
+  color: var(--purple-soft);
+}
+.badge.origin {
+  background: rgba(250,204,21,0.08);
+  color: var(--gold);
+}
+.badge.servings {
+  background: rgba(255,255,255,0.03);
+  color: var(--text-muted);
+}
+
+/* Ensure servings badge always appears on the next line */
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.recipe-meta .badge.servings {
+  flex-basis: 100%;
+  margin-left: 0;
+  margin-top: 6px;
 }
 
 .recipe-card {
@@ -137,6 +201,131 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+/* Detail view */
+.recipe-detail {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.back-button {
+  align-self: flex-start;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(124,58,237,1), rgba(168,85,247,1));
+  color: white;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(124,58,237,0.35);
+}
+
+.recipe-card.detail {
+  padding: 20px 22px;
+}
+
+.ingredients-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.ingredient-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(15,23,42,0.05));
+}
+
+.ingredient-qty {
+  min-width: 90px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.ingredient-name {
+  color: var(--text-main);
+}
+
+.instructions {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(15,23,42,0.03));
+  color: var(--text-muted);
+}
+
+.instructions h3 {
+  margin: 0 0 8px 0;
+  color: var(--purple-soft);
+}
+
+.detail-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.scaler label,
+.display-mode label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.scaler-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.scaler-controls button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(124,58,237,0.9);
+  color: white;
+  cursor: pointer;
+}
+
+.scaler-controls input[type="number"] {
+  width: 72px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(148,163,184,0.4);
+  background: rgba(15,23,42,0.9);
+  color: var(--text-main);
+  text-align: center;
+}
+
+.display-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.display-controls button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(148,163,184,0.25);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.display-controls button.active {
+  background: linear-gradient(90deg, rgba(124,58,237,1), rgba(168,85,247,1));
+  color: white;
+  border: none;
 }
 
 .recipe-card h3 {
