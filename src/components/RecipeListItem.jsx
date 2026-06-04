@@ -1,16 +1,11 @@
-// RecipeListItem.jsx
-export default function RecipeListItem({ recipe }) {
+export default function RecipeListItem({ recipe, onClick }) {
   return (
-  // RecipeListItem.jsx
-<li className="recipe-card">
-  <h3>{recipe.title}</h3>
-  <p>Cook time: {recipe.cookTime} min</p>
-  <p>
-    Category: {recipe.category} • Origin: {recipe.origin}
-  </p>
-  <a href={recipe.link} target="_blank" rel="noreferrer">
-    View recipe
-  </a>
-</li>
+    <li className="recipe-card" onClick={onClick} tabIndex={0} style={{cursor: "pointer"}}>
+      <h3>{recipe.name}</h3>
+      {/* <p>Cook time: {recipe.cookTime || "N/A"} min</p> */}
+      <p>Category: {recipe.category} </p>
+      <p>Origin: {recipe.origin || "N/A"} </p>
+      {/* Remove the <a> if you don't have URLs yet */}
+    </li>
   );
 }

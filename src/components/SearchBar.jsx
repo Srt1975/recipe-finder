@@ -16,7 +16,7 @@ export default function SearchBar({ searchText, onSearchTextChange, onSubmitSear
   <input
     id="search"
     type="text"
-    placeholder="Search by title or ingredient"
+    placeholder="Title, ingredient, category, or origin"
     value={searchText}
     onChange={handleChange}
   />
