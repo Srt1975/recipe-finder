@@ -1,11 +1,12 @@
 export default function RecipeListItem({ recipe, onClick }) {
   return (
-    <li className="recipe-card" onClick={onClick} tabIndex={0} style={{cursor: "pointer"}}>
+    <li className="recipe-card" onClick={onClick} tabIndex={0}>
       <h3>{recipe.name}</h3>
-      {/* <p>Cook time: {recipe.cookTime || "N/A"} min</p> */}
-      <p>Category: {recipe.category} </p>
-      <p>Origin: {recipe.origin || "N/A"} </p>
-      {/* Remove the <a> if you don't have URLs yet */}
+      <div className="recipe-meta">
+        {recipe.category && <span className="badge category">{recipe.category}</span>}
+        {recipe.origin && <span className="badge origin">{recipe.origin}</span>}
+        {recipe.servings && <span className="badge servings">{recipe.servings} servings</span>}
+      </div>
     </li>
   );
 }

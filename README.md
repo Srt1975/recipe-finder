@@ -14,3 +14,27 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Local dev notes
+
+- The frontend is a Vite + React app located here.
+- The server is in `../../server` and runs on port 5001 by default to avoid macOS system service conflicts.
+
+Run frontend:
+
+```bash
+cd recipe-browser/recipe-finder
+npm install
+npm run dev
+```
+
+Run server (separate terminal):
+
+```bash
+cd server
+npm install
+npm start
+```
+
+Git policy
+- Do not commit `server/recipes.db` (it's ignored by `.gitignore`). Use `seed.js` to populate the DB for local dev.
