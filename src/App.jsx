@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import RecipeList from "./components/RecipeList";
 import AdminList from "./components/AdminList";
+import AddRecipeForm from "./components/AddRecipeForm";
 import conv from "./utils/conversions";
 import "./App.css";
 
@@ -14,6 +15,7 @@ function App() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [detailServings, setDetailServings] = useState(null);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
 
 useEffect(() => {
   async function fetchRecipes() {
@@ -62,12 +64,25 @@ const filteredRecipes = recipes.filter(recipe => {
 // App.jsx
 return (
   <div className="App">
-    <h1 className="app-title">Recipe Finder</h1>
+    <h1 className="app-title">{selectedRecipe ? 'Recipe View' : 'Recipe Finder'}</h1>
       <div style={{display: 'flex', justifyContent: 'flex-end', gap: 8}}>
+        <button className="back-button" onClick={() => setShowAddForm(s => !s)}>{showAddForm ? 'Hide Add' : 'Add Recipe'}</button>
         <button className="back-button" onClick={() => setShowAdmin(s => !s)}>{showAdmin ? 'Hide Admin' : 'Show Admin'}</button>
       </div>
     {!selectedRecipe && (
       <>
+        {showAddForm && (
+          <AddRecipeForm
+            onCancel={() => setShowAddForm(false)}
+            onAdded={(newRecipe) => {
+              // append to list and open detail view
+              setRecipes(r => [ ...(r || []), newRecipe ]);
+              setSelectedRecipe(newRecipe);
+              setDetailServings(newRecipe.servings || 1);
+              setShowAddForm(false);
+            }}
+          />
+        )}
         <SearchBar
           searchText={searchText}
           onSearchTextChange={setSearchText}
@@ -128,6 +143,31 @@ return (
         <div className="recipe-card detail">
           <h2>{selectedRecipe.name}</h2>
 
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <button
+              className="back-button"
+              onClick={async () => {
+                if (!selectedRecipe || !selectedRecipe.id) return;
+                const ok = confirm('Delete this recipe?');
+                if (!ok) return;
+                try {
+                  const res = await fetch(`http://localhost:5001/recipes/${selectedRecipe.id}`, { method: 'DELETE' });
+                  if (!res.ok) {
+                    const body = await res.json().catch(() => ({}));
+                    throw new Error(body.error || `Request failed ${res.status}`);
+                  }
+                  // remove locally and close detail
+                  setRecipes(r => (r || []).filter(x => x.id !== selectedRecipe.id));
+                  setSelectedRecipe(null);
+                } catch (err) {
+                  alert('Failed to delete: ' + (err.message || err));
+                }
+              }}
+            >
+              Delete
+            </button>
+          </div>
+
           <div className="recipe-meta">
             {selectedRecipe.category && (
               <span className="badge category">{selectedRecipe.category}</span>
@@ -135,9 +175,7 @@ return (
             {selectedRecipe.origin && (
               <span className="badge origin">{selectedRecipe.origin}</span>
             )}
-            {selectedRecipe.servings && (
-              <span className="badge servings">{selectedRecipe.servings} servings</span>
-            )}
+            {/* servings shown via the interactive control below in detail view */}
           </div>
 
           {/* Ingredients scaler and display controls are below */}

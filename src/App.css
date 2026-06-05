@@ -308,6 +308,25 @@ body {
   text-align: center;
 }
 
+/* Servings input: remove native spinner arrows and ensure a readable width */
+.servings-input {
+  /* prefer ch unit so width corresponds to digit count */
+  min-width: 8ch; /* at least room for 8 digits */
+  width: auto; /* allow layout to size, but keep min */
+  padding: 6px 8px;
+  text-align: center;
+  appearance: textfield;
+  -webkit-appearance: none;
+  -moz-appearance: textfield; /* hide Firefox spinner */
+}
+
+/* Remove Chrome/Safari spinner buttons */
+.servings-input::-webkit-outer-spin-button,
+.servings-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .display-controls {
   display: flex;
   gap: 8px;
